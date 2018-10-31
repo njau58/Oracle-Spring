@@ -3,6 +3,7 @@ package org.spu.Login;
 
 
 import java.math.BigDecimal;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +14,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -22,6 +24,12 @@ import oracle.jdbc.OracleTypes;
 
 @Repository
 public class LoginDAO {
+	
+	
+@Bean
+public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
 
 	@Autowired
 	DataSource dataSource;
@@ -68,6 +76,9 @@ public class LoginDAO {
 
 		return loginlist;
 	}
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public List<LoginBean> createlogin( BigDecimal login_id,String login_name, String login_email, String login_password,String login_rank) throws SQLException {
 		
@@ -86,7 +97,7 @@ public class LoginDAO {
 			callStmnt.registerOutParameter(1, OracleTypes.DECIMAL);
 			callStmnt.setString(2, login_name);
 			callStmnt.setString(3, login_email);
-			callStmnt.setString(4, login_password);
+			callStmnt.setString(4,  passwordEncoder.encode(login_password));
 			callStmnt.setString(5, login_rank);
 			
 			callStmnt.executeUpdate();
