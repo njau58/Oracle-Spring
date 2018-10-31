@@ -24,25 +24,25 @@ public class LoginController {
 
 	
 
-	@RequestMapping(method = RequestMethod.GET, value = "/fetchlogin")
+	@RequestMapping(method = RequestMethod.GET, value = "/fetch")
 	public List<LoginBean> fetchlogin() throws SQLException {
 
 		return loginDAO.fetchlogin();
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/createlogin")
+	@RequestMapping(method = RequestMethod.POST, value = "/create")
 	public  List<LoginBean> createlogin(@RequestBody LoginBean loginBean) throws SQLException {
 
 		return loginDAO.createlogin(loginBean.getLogin_id(),loginBean.getLogin_name(), loginBean.getLogin_email(),loginBean.getLogin_password(),loginBean.getLogin_rank());
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/updatelogin")
+	@RequestMapping(method = RequestMethod.POST, value = "/update")
 	public List<LoginBean> updatelogin(@RequestBody LoginBean loginBean) throws SQLException {
 
 		return loginDAO.updatelogin(loginBean.getLogin_id(),loginBean.getLogin_name(),  loginBean.getLogin_email(),loginBean.getLogin_password(),loginBean.getLogin_rank());
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/deleteLogin")
+	@RequestMapping(method = RequestMethod.POST, value = "/delete")
 	public List<LoginBean> deletelogin(@RequestParam BigDecimal login_id) throws SQLException {
 
 		return loginDAO.deletelogin(login_id);
